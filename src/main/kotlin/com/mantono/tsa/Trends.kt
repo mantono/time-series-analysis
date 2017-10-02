@@ -59,6 +59,13 @@ fun <T: Number> dropAndTake(data: Collection<DataPoint<T>>, drop: Int, take: Int
         .toList()
 }
 
+/**
+ * This function computes how many elements that should be included in each sub list from
+ * originating [Collection]. This makes sure that
+ * - No values less than two are used as limit (since at least two values are needed for a trend)
+ * - Limits of odd size is corrected to an even size (so each sub list has an equal amount of elements)
+ * - The given amount is not larger than the entire collection
+ */
 fun computeTakeFromLimit(size: Int, limit: Int): Int
 {
     if(limit <= 1)
