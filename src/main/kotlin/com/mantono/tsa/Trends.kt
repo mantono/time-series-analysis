@@ -31,13 +31,13 @@ fun <T: Number> trendByTime(data: Collection<DataPoint<T>>, start: Instant, stop
         throw IllegalArgumentException("Start time cannot be after end time")
     val length = Duration.between(start, stop)
     val divider: Instant = start.plus(length.dividedBy(2L))
-    val divided: Map<Boolean, List<DataPoint<T>>> = data.asSequence()
+    val divided: Pair<List<DataPoint<T>>, List<DataPoint<T>>> = data.asSequence()
         .filter { it.timestamp.isAfter(start) }
         .filter { it.timestamp.isBefore(stop) }
-        .groupBy { it.timestamp.isBefore(divider) }
+		.partition { it.timestamp.isBefore(divider) }
 
-    val before: List<T> = divided[true]?.map { it.value } ?: emptyList()
-    val after: List<T> = divided[false]?.map { it.value } ?: emptyList()
+    val before: List<T> = divided.first.map { it.value }
+    val after: List<T> = divided.second.map { it.value }
     return Trend(before, after)
 }
 
