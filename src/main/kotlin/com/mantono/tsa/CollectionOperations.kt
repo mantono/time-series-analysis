@@ -1,7 +1,7 @@
 package com.mantono.tsa
 
-fun <T: Number> Collection<T>.sum(): Double = sumByDouble { it.toDouble() }
-fun <T: Number> Collection<T>.average(): Double = asSequence().map { it.toDouble() }.average()
+fun <T: Number> Iterable<T>.sum(): Double = sumByDouble { it.toDouble() }
+fun <T: Number> Iterable<T>.average(): Double = asSequence().map { it.toDouble() }.average()
 
 fun <T: Number> Collection<T>.median(): Double
 {
