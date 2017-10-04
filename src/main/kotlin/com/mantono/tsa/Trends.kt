@@ -43,20 +43,10 @@ fun <T: Number> trendByTime(data: Collection<DataPoint<T>>, start: Instant, stop
 
 fun <T: Number> trendBySize(data: Collection<DataPoint<T>>, limit: Int = data.size): Trend
 {
-    val take: Int = computeTakeFromLimit(data.size, limit)
-    val first: List<T> = dropAndTake(data, 0, take)
-    val second: List<T> = dropAndTake(data ,take, take)
+    val breakpoint: Int = computeTakeFromLimit(data.size, limit)
+    val first: List<T> = data.sortedSubList(0 until breakpoint).map { it.value }
+    val second: List<T> = data.sortedSubList(breakpoint..breakpoint*2).map { it.value }
     return Trend(first, second)
-}
-
-fun <T: Number> dropAndTake(data: Collection<DataPoint<T>>, drop: Int, take: Int): List<T>
-{
-    return data.asSequence()
-        .sortedBy { it.timestamp }
-        .drop(drop)
-        .take(take)
-        .map { it.value }
-        .toList()
 }
 
 /**

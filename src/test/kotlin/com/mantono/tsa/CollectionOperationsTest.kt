@@ -64,4 +64,20 @@ class CollectionOperationsTest
     {
         assertEquals(Double.NaN, emptyList<Double>().median())
     }
+
+	@Test
+	fun testSubList1()
+	{
+		val result = listOf(0, 1, 2, 3, 4, 5, 6).subList(0..2)
+		assertEquals(3, result.size)
+		assertEquals(listOf(0, 1, 2), result)
+	}
+
+	@Test
+	fun testSubList2()
+	{
+		val result = listOf(0, 1, 2, 3, 4, 5, 6).subList(3..4)
+		assertEquals(2, result.size)
+		assertEquals(listOf(3, 4), result)
+	}
 }
