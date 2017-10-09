@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'idea'
 
 group = 'com.mantono'
-version = '0.1.0'
+version = '0.1.1'
 description = 'Tools for basic analysis of data in time series.'
 
 defaultTasks 'test'
