@@ -28,6 +28,4 @@ fun <T> Iterable<T>.subList(include: IntRange): List<T> = asSequence().subList(i
 fun <T> Sequence<T>.subList(include: IntRange): List<T> = filterIndexed { i, _ -> i in include }.toList()
 fun <T> Sequence<T>.subSequence(include: IntRange): Sequence<T> = filterIndexed { i, _ -> i in include }
 
-fun <T: Number> Sequence<Pair<Instant, T>>.asDataPoints() = this.map { DoubleDataPoint(it.first, it.second.toDouble()) }
-
 data class DoubleDataPoint(override val timestamp: Instant, override val value: Double): DataPoint<Double>

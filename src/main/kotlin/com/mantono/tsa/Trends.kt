@@ -29,6 +29,10 @@ fun <T: Number> trendByTime(data: Collection<DataPoint<T>>, start: Instant, stop
 {
     if(start.isAfter(stop))
         throw IllegalArgumentException("Start time cannot be after end time")
+
+	if(data.size < 2)
+		throw IllegalArgumentException("Collection of data points does not contain enough values. 2 is required, got ${data.size}")
+
     val length = Duration.between(start, stop)
     val divider: Instant = start.plus(length.dividedBy(2L))
     val divided: Pair<List<DataPoint<T>>, List<DataPoint<T>>> = data.asSequence()
@@ -38,6 +42,24 @@ fun <T: Number> trendByTime(data: Collection<DataPoint<T>>, start: Instant, stop
 
     val before: List<T> = divided.first.map { it.value }
     val after: List<T> = divided.second.map { it.value }
+
+	if(before.isEmpty())
+	{
+		val timeOfFirstValue: Instant = data.asSequence()
+			.map { it.timestamp }
+			.sorted()
+			.first()
+			.minusMillis(1)
+
+		val timeOfLastValue: Instant = data.asSequence()
+			.map { it.timestamp }
+			.sorted()
+			.last()
+			.plusMillis(1)
+
+		return trendByTime(data, timeOfFirstValue, timeOfLastValue)
+	}
+
     return Trend(before, after)
 }
 

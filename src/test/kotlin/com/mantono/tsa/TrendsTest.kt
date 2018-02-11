@@ -75,4 +75,20 @@ class TrendsTest
 		assertEquals(6.0, trend.second.sum())
 		assertEquals(2.0, trend.byAverage(), 0.00000001)
 	}
+
+	@Test
+	fun testTrendWithOnlyDataPointInSecondHalfOfTimeSpan()
+	{
+		val data: List<DataPoint<Int>> = listOf(
+			Data(secondsAgo(5), 1),
+			Data(secondsAgo(3), 2)
+		)
+
+		val trend = trendByTime(data, Instant.now().minusSeconds(60), Instant.now())
+		// Trend: 2.0 = 2 / 1
+		assertEquals(2.0, trend.bySum())
+
+	}
+
+	private fun secondsAgo(seconds: Long): Instant = Instant.now().minusSeconds(seconds)
 }
