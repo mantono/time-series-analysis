@@ -43,7 +43,7 @@ fun <T: Number> trendByTime(data: Collection<DataPoint<T>>, start: Instant, stop
     val before: List<T> = divided.first.map { it.value }
     val after: List<T> = divided.second.map { it.value }
 
-	if(before.isEmpty())
+	if(before.isEmpty() || after.isEmpty())
 	{
 		val timeOfFirstValue: Instant = data.asSequence()
 			.map { it.timestamp }
